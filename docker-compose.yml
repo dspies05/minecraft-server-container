@@ -1,8 +1,9 @@
 services:
   minecraft:
+    build: .
     image: minecraft_vanilla
     ports:
       - "25565:25565"
     volumes:
-    - ../minecraft-data:/minecraft
+    - ./minecraft-data:/minecraft
     restart: unless-stopped

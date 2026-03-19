@@ -2,6 +2,8 @@ FROM debian:latest
 
 ARG JAVA_JDK=openjdk-21-jdk
 
+COPY --chmod=775 ./scripts /scripts
+
 WORKDIR /minecraft
 
 RUN apt update
@@ -16,10 +18,4 @@ ENV SERVER_JAR=https://piston-data.mojang.com/v1/objects/64bb6d763bed0a9f1d632ec
 EXPOSE 25565/tcp
 EXPOSE 25565/udp
 
-ENTRYPOINT sh -c '\
-  if [ ! -f server.jar ]; then \
-    wget -O server.jar "$SERVER_JAR"; \
-  fi; \
-  echo "eula=true" eula.txt; \
-  java -Xms$JAVA_XMS -Xmx$JAVA_XMX -jar server.jar nogui \
-  '
+ENTRYPOINT ["/scripts/start"]
